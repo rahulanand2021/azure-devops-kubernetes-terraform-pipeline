@@ -12,32 +12,53 @@ stages:
     steps: 
     - bash: echo Build First Job
     - bash: echo $(PipelineLevelVariable)
-  - job: SecondJob 
-    steps: 
-    - bash: echo Build SecondJob Job    
-- stage: DevDeploy
-  variables:
-   environment: Dev
-  dependsOn: Build
-  jobs:
-  - job: DevDeployJob
-    steps: 
-    - bash: echo $(environment)Deploy Job
-- stage: QaDeploy
-  variables:
-   environment: QA
-  dependsOn: Build
-  jobs:
-  - job: QaDeployJob
-    steps: 
-    - bash: echo $(environment)Deploy Job
-- stage: ProdDeploy
-  variables:
-   environment: Prod
-  dependsOn: 
-  - DevDeploy
-  - QaDeploy
-  jobs:
-  - job: ProdDeployJob
-    steps: 
-    - bash: echo $(environment)Deploy Job
+      displayName: PipelineLevelVariable
+    - bash: echo $(Build.ArtifactStagingDirectory)
+      displayName: ArtifactStagingDirectory
+    - bash: echo $(Build.BuildNumber)
+      displayName: BuildNumber
+    - bash: echo $(Build.BuildId)
+      displayName: BuildId
+    - bash: echo $(Build.SourceBranchName)
+      displayName: SourceBranchName            
+    - bash: echo $(Build.SourceDirectory)
+      displayName: SourceDirectory
+    - bash: echo $(System.DefaultWorkingDirectory)
+      displayName: DefaultWorkingDirectory
+    - bash: echo ls -R $(System.DefaultWorkingDirectory)
+      displayName: ArtifactStagingDirectory
+    - bash: echo $(Build.BinariesDirectory)
+      displayName: Build.BinariesDirectory
+    - bash: echo $(Build.Repository.LocalPath)
+      displayName: Build.Repository.LocalPath      
+    - bash: echo $System.AccessToken)
+      displayName: AccessToken                         
+  # - job: SecondJob 
+  #   steps: 
+  #   - bash: echo Build SecondJob Job    
+# - stage: DevDeploy
+#   variables:
+#    environment: Dev
+#   dependsOn: Build
+#   jobs:
+#   - job: DevDeployJob
+#     steps: 
+#     - bash: echo $(environment)Deploy Job
+# - stage: QaDeploy
+#   variables:
+#    environment: QA
+#   dependsOn: Build
+#   jobs:
+#   - job: QaDeployJob
+#     steps: 
+#     - bash: echo $(environment)Deploy Job
+# - stage: ProdDeploy
+#   variables:
+#    environment: Prod
+#   dependsOn: 
+#   - DevDeploy
+#   - QaDeploy
+#   jobs:
+#   - job: ProdDeployJob
+#     steps: 
+#     - bash: echo $(environment)Deploy Job
