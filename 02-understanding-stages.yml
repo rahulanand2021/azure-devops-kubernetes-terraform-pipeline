@@ -31,7 +31,7 @@ stages:
       displayName: Build.BinariesDirectory
     - bash: echo $(Build.Repository.LocalPath)
       displayName: Build.Repository.LocalPath      
-    - bash: echo $System.AccessToken)
+    - bash: echo $System.AccessToken
       displayName: AccessToken                         
   # - job: SecondJob 
   #   steps: 
