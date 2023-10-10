@@ -11,28 +11,34 @@ stages:
   - job: FirstJob 
     steps: 
     - bash: echo Build First Job
-    - bash: echo $(PipelineLevelVariable)
-      displayName: PipelineLevelVariable
-    - bash: echo $(Build.ArtifactStagingDirectory)
-      displayName: ArtifactStagingDirectory
-    - bash: echo $(Build.BuildNumber)
-      displayName: BuildNumber
-    - bash: echo $(Build.BuildId)
-      displayName: BuildId
-    - bash: echo $(Build.SourceBranchName)
-      displayName: SourceBranchName            
-    - bash: echo $(Build.SourcesDirectory)
-      displayName: SourceDirectory
-    - bash: echo $(System.DefaultWorkingDirectory)
-      displayName: DefaultWorkingDirectory
-    - bash: echo ls -R $(System.DefaultWorkingDirectory)
-      displayName: ArtifactStagingDirectory
-    - bash: echo $(Build.BinariesDirectory)
-      displayName: Build.BinariesDirectory
-    - bash: echo $(Build.Repository.LocalPath)
-      displayName: Build.Repository.LocalPath      
-    - bash: echo $System.AccessToken
-      displayName: AccessToken                         
+    - bash: java -version
+      displayName: Java Version     
+    - bash: mvn --version
+      displayName: Maven Version
+    - bash: python --version
+      displayName: Python Version
+    - bash: node --version
+      displayName: Node Version                
+    # - bash: echo $(Build.ArtifactStagingDirectory)
+    #   displayName: ArtifactStagingDirectory
+    # - bash: echo $(Build.BuildNumber)
+    #   displayName: BuildNumber
+    # - bash: echo $(Build.BuildId)
+    #   displayName: BuildId
+    # - bash: echo $(Build.SourceBranchName)
+    #   displayName: SourceBranchName            
+    # - bash: echo $(Build.SourcesDirectory)
+    #   displayName: SourceDirectory
+    # - bash: echo $(System.DefaultWorkingDirectory)
+    #   displayName: DefaultWorkingDirectory
+    # - bash: echo ls -R $(System.DefaultWorkingDirectory)
+    #   displayName: ArtifactStagingDirectory
+    # - bash: echo $(Build.BinariesDirectory)
+    #   displayName: Build.BinariesDirectory
+    # - bash: echo $(Build.Repository.LocalPath)
+    #   displayName: Build.Repository.LocalPath      
+    # - bash: echo $System.AccessToken
+    #   displayName: AccessToken                         
   # - job: SecondJob 
   #   steps: 
   #   - bash: echo Build SecondJob Job    
