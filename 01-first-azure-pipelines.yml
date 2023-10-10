@@ -27,7 +27,15 @@ jobs:
     displayName: 'Job 2 Proceding to Run'
 
 - job: Job3
-  dependsOn: Job2
+  dependsOn: Job1
   steps:
   - script: echo Job3 is Running!
+    displayName: 'Job 3 Proceding to Run'
+
+- job: Job4
+  dependsOn:
+  - Job2
+  - Job3
+  steps:
+  - script: echo Job4 is Running!
     displayName: 'Job 4 Proceding to Run'
