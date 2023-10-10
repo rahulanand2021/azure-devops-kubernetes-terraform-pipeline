@@ -18,7 +18,20 @@ stages:
     - bash: python --version
       displayName: Python Version
     - bash: node --version
-      displayName: Node Version                
+      displayName: Node Version
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
+      displayName: Listing Artifact Staging Directory Before copy
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: |
+          **/*.yaml
+          **/*.tf
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
+      displayName: Listing Artifact Staging Directory After copy
+
     # - bash: echo $(Build.ArtifactStagingDirectory)
     #   displayName: ArtifactStagingDirectory
     # - bash: echo $(Build.BuildNumber)
