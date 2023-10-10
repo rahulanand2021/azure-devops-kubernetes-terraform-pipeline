@@ -21,7 +21,7 @@ stages:
       displayName: BuildId
     - bash: echo $(Build.SourceBranchName)
       displayName: SourceBranchName            
-    - bash: echo $(Build.SourceDirectory)
+    - bash: echo $(Build.SourcesDirectory)
       displayName: SourceDirectory
     - bash: echo $(System.DefaultWorkingDirectory)
       displayName: DefaultWorkingDirectory
