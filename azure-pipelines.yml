@@ -35,3 +35,4 @@ stages:
         deploy:
            steps:
              - script: echo "Deploy to QA"
+               displayName: "Deploy to QA Step"
