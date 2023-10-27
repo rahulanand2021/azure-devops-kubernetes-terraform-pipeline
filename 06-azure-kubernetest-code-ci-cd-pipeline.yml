@@ -1,0 +1,63 @@
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  # tag: '$(Build.BuildId)'
+  tag: 24
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'rahul-docker-hub-service-connection'
+    #     repository: 'rahulanand29/currency-exchange-devops'
+    #     command: 'buildAndPush'
+    #     Dockerfile: '**/Dockerfile'
+    #     tags: '$(tag)'
+    - task: CopyFiles@2
+      displayName: Copying File to Artifact Staging Directory
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/*.yaml'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      displayName: Publishing File to Artifact Staging Directory
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'manifests'
+        publishLocation: 'Container'
+
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DownloadPipelineArtifact@2
+      displayName: Download File to System Artifact Directory
+      inputs:
+        buildType: 'current'
+        artifactName: 'manifests'
+        itemPattern: '**/*.yaml'
+        targetPath: '$(System.ArtifactsDirectory)'
+    - task: KubernetesManifest@1
+      displayName: Deploying to K8s Cluster
+      inputs:
+        action: 'deploy'
+        connectionType: 'kubernetesServiceConnection'
+        kubernetesServiceConnection: 'azure-kubernetes-service-connection'
+        namespace: 'default'
+        manifests: $(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml
+        containers: 'rahulanand29/currency-exchange-devops:$(tag)'
