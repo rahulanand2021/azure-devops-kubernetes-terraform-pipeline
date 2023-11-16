@@ -5,8 +5,8 @@ resources:
 - repo: self
 
 variables:
-  # tag: '$(Build.BuildId)'
-  tag: 24
+  tag: '$(Build.BuildId)'
+  #tag: 24
 
 stages:
 - stage: Build
@@ -17,13 +17,13 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: 'rahul-docker-hub-service-connection'
-    #     repository: 'rahulanand29/currency-exchange-devops'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfile'
-    #     tags: '$(tag)'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'rahul-docker-hub-service-connection'
+        repository: 'rahulanand29/currency-exchange-devops'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
     - task: CopyFiles@2
       displayName: Copying File to Artifact Staging Directory
       inputs:
