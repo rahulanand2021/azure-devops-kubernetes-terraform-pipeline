@@ -29,15 +29,13 @@ provider "kubernetes" {
 }
 
 module "in28minutes-cluster" {
-  source          = "terraform-aws-modules/eks/aws"
+  source          = "terraform-aws-modules/eks/aws/17.24.0"
   cluster_name    = "in28minutes-cluster"
   cluster_version = "1.14"
   subnets         = ["subnet-086cc6f648047d26a", "subnet-0f3a38f69778b05f7"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
-
-  #vpc_id         = "vpc-1234556abcdef"
-
+  
   node_groups = [
     {
       instance_type = "t2.micro"
