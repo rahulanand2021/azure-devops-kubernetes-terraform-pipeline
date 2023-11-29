@@ -29,21 +29,36 @@ provider "kubernetes" {
 
 module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
+  version = "~> 19.0"
   cluster_name    = "in28minutes-cluster"
-  version = "14.0.0"
-  cluster_version = "1.17"
-  subnets         = ["subnet-086cc6f648047d26a", "subnet-0f3a38f69778b05f7"] #CHANGE
-  #subnets = data.aws_subnet_ids.subnets.ids
-  vpc_id          = aws_default_vpc.default.id
+  cluster_version = "1.27"
   
-  node_groups = [
-    {
-      instance_type = "t2.micro"
-      max_capacity  = 5
-      desired_capacity = 2
-      min_capacity  = 2
+  cluster_endpoint_public_access  = true
+
+
+
+  cluster_addons = {
+    coredns = {
+      most_recent = true
     }
-  ]
+    kube-proxy = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent = true
+    }
+  }
+
+  vpc_id          = aws_default_vpc.default.id
+  subnet_ids         = ["subnet-086cc6f648047d26a", "subnet-0f3a38f69778b05f7"] 
+  
+self_managed_node_group_defaults = {
+    instance_type                          = "t2.micro"
+    update_launch_template_default_version = true
+    iam_role_additional_policies = {
+      AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+    }
+}
 }
 
 data "aws_eks_cluster" "cluster" {
