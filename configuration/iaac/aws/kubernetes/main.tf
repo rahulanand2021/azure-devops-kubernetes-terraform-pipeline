@@ -90,13 +90,13 @@ self_managed_node_groups = {
 
 
 
-data "aws_eks_cluster" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
-}
+# data "aws_eks_cluster" "cluster" {
+#   name = module.in28minutes-cluster.cluster_id
+# }
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
-}
+# data "aws_eks_cluster_auth" "cluster" {
+#   name = module.in28minutes-cluster.cluster_id
+# }
 
 
 # We will use ServiceAccount to connect to K8S Cluster in CI/CD mode
