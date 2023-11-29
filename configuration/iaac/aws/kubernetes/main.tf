@@ -21,11 +21,20 @@ resource "aws_default_vpc" "default" {
 #   vpc_id = aws_default_vpc.default.id
 # }
 
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-}
+# data "aws_eks_cluster" "cluster" {
+#   name = module.in28minutes-cluster.cluster_id
+# }
+
+# data "aws_eks_cluster_auth" "cluster" {
+#   name = module.in28minutes-cluster.cluster_id
+# }
+
+
+# provider "kubernetes" {
+#   host                   = data.aws_eks_cluster.cluster.endpoint
+#   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+#   token                  = data.aws_eks_cluster_auth.cluster.token
+# }
 
 module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
@@ -90,13 +99,6 @@ self_managed_node_groups = {
 
 
 
-# data "aws_eks_cluster" "cluster" {
-#   name = module.in28minutes-cluster.cluster_id
-# }
-
-# data "aws_eks_cluster_auth" "cluster" {
-#   name = module.in28minutes-cluster.cluster_id
-# }
 
 
 # We will use ServiceAccount to connect to K8S Cluster in CI/CD mode
