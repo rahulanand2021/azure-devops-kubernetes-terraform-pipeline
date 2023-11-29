@@ -86,7 +86,7 @@ self_managed_node_groups = {
             weighted_capacity = "1"
           },
           {
-            instance_type     = "t2.micro"
+            instance_type     = "t2.medium"
             weighted_capacity = "2"
           },
         ]
@@ -106,7 +106,7 @@ self_managed_node_groups = {
 # and services in default namespace
 resource "kubernetes_cluster_role_binding" "example" {
   metadata {
-    name = "fabric8-rbac"
+    name = "fabric8-rbac1"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
