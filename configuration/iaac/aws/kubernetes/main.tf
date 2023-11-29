@@ -44,22 +44,11 @@ module "in28minutes-cluster" {
   
   cluster_endpoint_public_access  = true
 
-
-
-  cluster_addons = {
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-  }
-
   vpc_id          = aws_default_vpc.default.id
   subnet_ids         = ["subnet-086cc6f648047d26a", "subnet-0f3a38f69778b05f7"] 
   
 self_managed_node_group_defaults = {
-    instance_type                          = "t2.micro"
+    instance_type                          = "m6i.large"
     update_launch_template_default_version = true
     iam_role_additional_policies = {
       AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
@@ -82,11 +71,11 @@ self_managed_node_groups = {
 
         override = [
           {
-            instance_type     = "t2.micro"
+            instance_type     = "m5.large"
             weighted_capacity = "1"
           },
           {
-            instance_type     = "t2.medium"
+            instance_type     = "m6i.large"
             weighted_capacity = "2"
           },
         ]
