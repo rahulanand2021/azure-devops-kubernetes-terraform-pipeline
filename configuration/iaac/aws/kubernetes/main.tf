@@ -95,7 +95,7 @@ self_managed_node_groups = {
 # and services in default namespace
 resource "kubernetes_cluster_role_binding" "example" {
   metadata {
-    name = "fabric8-rbac1"
+    name = "fabric8-rbac"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
